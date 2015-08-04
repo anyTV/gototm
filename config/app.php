@@ -28,6 +28,8 @@ return [
 
     'url' => 'http://goto.tm',
 
+    'geoip' => 'https://www.telize.com/',
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
