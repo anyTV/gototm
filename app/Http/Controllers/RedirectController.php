@@ -53,7 +53,7 @@ class RedirectController extends Controller
         Rule::create($input);
 
         return redirect()->action('RedirectController@success',
-            [$input['short_url']]);
+            [urlencode($input['short_url'])]);
     }
 
     public function success($url)
