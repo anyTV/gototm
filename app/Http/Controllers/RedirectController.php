@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRedirectRequest;
 use App\Rule;
+use App\Visit;
 
 class RedirectController extends Controller
 {
@@ -21,14 +22,28 @@ class RedirectController extends Controller
         return view('home');
     }
 
-    public function goToNewUrl($code)
+    public function goToNewUrl(Request $request, $code)
     {
         $url = Rule::where('short_url', $code)
             ->first();
 
         if (!$url) {
-            return view('errors.404');
+            $view = view('errors.404');
+
+            return response($view, 404);
         }
+
+        $user_agent = parse_user_agent($request->header('user-agent'));
+        $rdr = [
+            'ip_address' => $request->getClientIp(),
+            'referer' => $request->header('referer'),
+            'browser' => $user_agent['browser'],
+            'platform' => $user_agent['platform'],
+            'country' => $request->header('CF-IPCountry'),
+            'browser_version' => $user_agent['version']
+        ];
+
+        Visit::create($rdr);
 
         return redirect()->to($url->long_url);
     }
@@ -36,17 +51,24 @@ class RedirectController extends Controller
     public function store(CreateRedirectRequest $request)
     {
         $input = $request->only('long_url', 'short_url');
+
         Rule::create($input);
 
         return redirect()->action('RedirectController@success',
-            [$input['short_url']]);
+            [urlencode($input['short_url'])]);
     }
 
     public function success($url)
     {
         $rule = Rule::where('short_url', $url)
-            ->first()->toArray();
+            ->first();
 
-        return view('monitor')->with('data', $rule);
+        if (!$rule) {
+            $view = view('errors.404');
+
+            return response($view, 404);
+        }
+
+        return view('success')->with('data', $rule);
     }
 }

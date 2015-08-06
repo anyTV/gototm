@@ -12,6 +12,14 @@
 */
 
 Route::get('/', 'RedirectController@index');
-Route::get('/{code}', 'RedirectController@goToNewUrl');
-Route::get('/{code}/success', 'RedirectController@success');
+
+Route::group([
+    'prefix' => '/{code}',
+    'where' => ['code' => '(.*)'],
+], function()
+{
+    Route::get('success', 'RedirectController@success');
+    Route::get('/', 'RedirectController@goToNewUrl');
+});
+
 Route::post('redirect', 'RedirectController@store');

@@ -2,33 +2,10 @@
 <html>
     <head>
         <title>We could not found this page</title>
-
-        <link href="//fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
+        <link href="{{ elixir('css/app.css') }}" rel="stylesheet" type="text/css">
         <style>
-            html, body {
-                height: 100%;
-            }
-
             body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
                 color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
             }
 
             .title {
@@ -40,7 +17,9 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">We could not found this page</div>
+                <div class="title">We don't know where to go :(</div>
+                <h1>Would you like to tell us?</h1>
+                <a href="/">Click here</a>
             </div>
         </div>
     </body>
