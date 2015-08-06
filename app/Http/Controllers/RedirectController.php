@@ -28,10 +28,12 @@ class RedirectController extends Controller
             ->first();
 
         if (!$url) {
-            return view('errors.404');
+            $view = view('errors.404');
+
+            return response($view, 404);
         }
 
-        $user_agent = parse_user_agent();
+        $user_agent = parse_user_agent($request->header('user-agent'));
         $rdr = [
             'ip_address' => $request->getClientIp(),
             'referer' => $request->header('referer'),
@@ -62,7 +64,9 @@ class RedirectController extends Controller
             ->first();
 
         if (!$rule) {
-            return view('errors.404');
+            $view = view('errors.404');
+
+            return response($view, 404);
         }
 
         return view('success')->with('data', $rule);
