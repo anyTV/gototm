@@ -31,18 +31,23 @@ class AuthController extends Controller
         return view('login');
     }
 
+    public function getCheckpoint()
+    {
+        return view('errors.notallowed');
+    }
+
     public function getIndex()
     {
         $data = [
                 'service' => 'gototm',
-                'redirect_uri' => 'http://goto.tm/au/callback',
+                'redirect_uri' => config('oauth.callback_uri'),
                 'response_type' => 'code',
                 'roles' => 'profile,email,partner',
                 'state' => '/'
             ];
 
         $param = http_build_query($data);
-        $url = 'http://api.accounts.freedom.tm/auth?';
+        $url = config('oauth.base_uri') . '/auth?';
 
         return redirect()->away($url . $param);
     }
@@ -57,7 +62,7 @@ class AuthController extends Controller
         $access_token = Input::get('access_token');
         $state = Input::get('state');
 
-        $client = new Client(['base_uri' => 'http://api.accounts.freedom.tm']);
+        $client = new Client(['base_uri' => config('oauth.base_uri')]);
 
         $response = $client->get('/user',
             [ 'headers' => [
@@ -72,13 +77,17 @@ class AuthController extends Controller
         $user = json_decode($response->getBody(), true);
 
         if (!preg_match('/.*((\@any\.tv)|(\@freedom\.tm))/', $user['email'])) {
-            return view('errors.notallowed');
+            return redirect('/au/checkpoint');
         }
 
         Session::put('auth.access_token', $access_token);
         Session::put('auth.user', $user);
 
-        return redirect('/');
+        if ($state === NULL || $state === '') {
+            $state = '/';
+        }
+
+        return redirect($state);
     }
 
     public function getLogout()
