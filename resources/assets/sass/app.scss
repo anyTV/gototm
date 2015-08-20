@@ -7,17 +7,34 @@ html, body {
 body {
     margin: 0;
     padding: 0;
-    width: 100%;
-    display: table;
+    display: block;
     font-weight: 100;
     font-family: 'Lato';
     background-color: #f9f9f9;
+}
+
+.header {
+    float: right;
+    padding: 25px;
+}
+
+.header-item {
+    padding-left: 10px;
 }
 
 .container {
     text-align: center;
     display: table-cell;
     vertical-align: middle;
+
+}
+
+.main {
+    height:70%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: table;
 }
 
 .content {

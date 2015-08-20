@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use Auth;
+use Input;
+use Session;
 use Validator;
+use GuzzleHttp\Client;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -30,36 +23,69 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function getLogin()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        return view('login');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
+    public function getIndex()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data = [
+                'service' => 'gototm',
+                'redirect_uri' => 'http://goto.tm/au/callback',
+                'response_type' => 'code',
+                'roles' => 'profile,email,partner',
+                'state' => '/'
+            ];
+
+        $param = http_build_query($data);
+        $url = 'http://api.accounts.freedom.tm/auth?';
+
+        return redirect()->away($url . $param);
+    }
+
+    public function getCallback()
+    {
+        if (!Input::get('access_token')) {
+
+            return redirect('/au');
+        }
+
+        $access_token = Input::get('access_token');
+        $state = Input::get('state');
+
+        $client = new Client(['base_uri' => 'http://api.accounts.freedom.tm']);
+
+        $response = $client->get('/user',
+            [ 'headers' => [
+                'access-token' => $access_token
+                ]
+            ]);
+
+        if ($response->getStatusCode() !== 200) {
+            return redirect('/')->withErrors(['Unable to login']);
+        }
+
+        $user = json_decode($response->getBody(), true);
+
+        if (!preg_match('/.*((\@any\.tv)|(\@freedom\.tm))/', $user['email'])) {
+            return view('errors.notallowed');
+        }
+
+        Session::put('auth.access_token', $access_token);
+        Session::put('auth.user', $user);
+
+        return redirect('/');
+    }
+
+    public function getLogout()
+    {
+        Session::forget('auth.access_token');
+        Session::forget('auth.user');
+
+        return redirect('/');
     }
 }

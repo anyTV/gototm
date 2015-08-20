@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'RedirectController@index');
+Route::controller('/au', 'Auth\AuthController');
+
 
 Route::group([
     'prefix' => '/{code}',
@@ -22,4 +24,4 @@ Route::group([
     Route::get('/', 'RedirectController@goToNewUrl');
 });
 
-Route::post('redirect', 'RedirectController@store');
+Route::post('redirect', ['middleware' => 'auth', 'uses' => 'RedirectController@store']);
