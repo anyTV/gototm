@@ -1,5 +1,7 @@
 gotoTM
 ====
+Scrutinizer : [![Build Status](https://scrutinizer-ci.com/g/anyTV/gototm/badges/build.png?b=master)](https://scrutinizer-ci.com/g/anyTV/gototm/build-status/master)
+Travis CI : [![Build Status](https://travis-ci.org/anyTV/gototm.svg?branch=master)](https://travis-ci.org/anyTV/gototm)
 
 URL Forwarder
 
