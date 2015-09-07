@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRedirectRequest;
 use App\Rule;
 use App\Visit;
+use Session;
 
 class RedirectController extends Controller
 {
@@ -19,6 +20,10 @@ class RedirectController extends Controller
 
     public function index()
     {
+        if (!Session::has('auth.user')) {
+            return view('login');
+        }
+
         return view('home');
     }
 

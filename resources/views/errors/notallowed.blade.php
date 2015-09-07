@@ -18,9 +18,9 @@
         <div class="main">
             <div class="container">
                 <div class="content">
-                    <div class="title">We don't know where to go :(</div>
-                    <h1>Would you like to tell us?</h1>
-                    <a href="/">Click here</a>
+                    <div class="title">Sorry :(</div>
+                    <h1>For now, goto.TM is only available for Freedom! staffs</h1>
+                    <a href="/au/logout">Click here to logout</a>
                 </div>
             </div>
         </div>

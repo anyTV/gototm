@@ -19,9 +19,8 @@ class RedirectionTest extends TestCase
     public function test_if_it_displays_home_page()
     {
         $this->visit('/')
-             ->see('goto.tm')
-             ->see('New URL')
-             ->see('URL');
+             ->see('Please login to proceed')
+             ->see('Login with Freedom!');
     }
 
     public function test_redirect()
