@@ -16,7 +16,7 @@
                     <label>New URL</label>
                     <input type="text" name="short_url" placeholder="http://goto.tm/"/>
                     <input type="submit"/>
-                    <div class="g-recaptcha" data-sitekey="6LfWsgoTAAAAABb44i-KdeWKVXEe8ghQat6hIel2"></div>
+                    <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
                 </form>
                 <br>
                 @if ($errors->any())
