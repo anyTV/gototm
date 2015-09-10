@@ -10,6 +10,11 @@
                     Search: <input type="text" ng-model="q"/><button ng-click="search()">Submit</button>
                 </div>
                 <div class="sub-content">
+                    <ul ng-show="errors" class="error-list">
+                        <li ng-repeat="(key, error) in errors track by key">
+                            <p ng-bind="error"></p>
+                        </li>
+                    </ul>
                     <table>
                         <thead>
                             <th>Long URL</th>

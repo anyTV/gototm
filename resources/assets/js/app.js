@@ -55,8 +55,9 @@ var userApp = angular.module('userApp', ['bw.paging'], function($interpolateProv
                 link.updated_at = moment.utc(data.updated_at).fromNow();
                 link.long_edit_mode = false;
                 link.short_edit_mode = false;
+            }).error(function (data) {
+                $scope.errors = data;
             });
-
         };
 
         $scope.deleteLink = function (link) {
@@ -68,6 +69,8 @@ var userApp = angular.module('userApp', ['bw.paging'], function($interpolateProv
                 params: link
             }).success(function (data) {
                 $scope.links.data.splice(link.position, 1);
+            }).error(function (data) {
+                $scope.errors = data;
             });
         };
 

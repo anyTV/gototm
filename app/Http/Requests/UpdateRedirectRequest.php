@@ -24,8 +24,8 @@ class UpdateRedirectRequest extends Request
     public function rules()
     {
         return [
-            'long_url' => 'required:url',
-            'short_url' => 'required|min:2',
+            'long_url' => ['required', 'url'],
+            'short_url' => ['required', 'min:2'],
         ];
     }
 }
