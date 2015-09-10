@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App;
 use Closure;
+
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier
@@ -19,8 +21,12 @@ class VerifyCsrfToken extends BaseVerifier
     public function handle($request, Closure $next)
     {
         if ($request->input('_token') && !$this->tokensMatch($request)) {
-            return redirect()->back()->withErrors(['Token mismatch']);;
 
+            if ($request->ajax()) {
+                App::abort(400, 'Token mismatch');
+            }
+
+            return redirect()->back()->withErrors(['Token mismatch']);;
         }
 
         return $next($request);

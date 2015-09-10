@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'captcha' => \App\Http\Middleware\ReCaptcha::class,
+        'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
     ];
 }

@@ -16,26 +16,31 @@ class RedirectRuleSeeder extends Seeder
         DB::table('redirect_rules')->delete();
 
         Rule::create([
+            'email' => 'esh@any.tv',
             'long_url' => 'https://www.freedom.tm/',
             'short_url' => 'freedom',
             ]);
 
         Rule::create([
+            'email' => 'esh@any.tv',
             'long_url' => 'https://www.freedom.tm/dashboard',
             'short_url' => 'freedom/dashboard',
             ]);
 
         Rule::create([
+            'email' => 'esh@any.tv',
             'long_url' => 'https://www.freedom.tm/dashboard/lfg',
             'short_url' => 'freedom/dashboard/lfg',
             ]);
 
         Rule::create([
+            'email' => 'esh@any.tv',
             'long_url' => 'https://www.freedom.tm:8000',
             'short_url' => 'port',
             ]);
 
         Rule::create([
+            'email' => 'esh@any.tv',
             'long_url' => 'https://www.freedom.tm:8000/page',
             'short_url' => 'port/page',
             ]);
