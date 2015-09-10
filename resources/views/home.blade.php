@@ -9,14 +9,16 @@
         <div class="main">
             <div class="container">
                 <span class="title">goto.tm</span>
-                <br><br>
+                <br>
+                <span><small>Freedom! URL Shortener</small></span>
+                <br><br><br>
                 <div class="content">
                     <form action="redirect" method="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <label>URL</label>
-                        <input type="text" name="long_url"/>
-                        <label>New URL</label>
-                        <input type="text" name="short_url" placeholder="http://goto.tm/"/>
+                        <label>Long URL</label>
+                        <input type="text" name="long_url" placeholder="Paste a long URL here"/>
+                        <label>Short URL <small>{{ config('app.url') }}/</small></label>
+                        <input type="text" name="short_url"/>
                         <input type="submit"/>
                         <div class="g-recaptcha" data-sitekey="{{ config('recaptcha.site_key') }}"></div>
                     </form>

@@ -10,6 +10,6 @@ class Rule extends Model
     protected $collection = 'redirect_rules';
     protected $primaryKey = 'short_url';
     protected $fillable = [
-            'long_url', 'short_url'
+            'long_url', 'short_url', 'email',
         ];
 }

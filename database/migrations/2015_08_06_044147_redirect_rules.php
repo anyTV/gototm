@@ -15,6 +15,7 @@ class RedirectRules extends Migration
         Schema::create('redirect_rules', function($collection)
         {
             $collection->index('_id');
+            $collection->string('email');
             $collection->unique('short_url');
             $collection->string('long_url');
             $collection->timestamps();

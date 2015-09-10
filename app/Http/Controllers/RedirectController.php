@@ -56,6 +56,7 @@ class RedirectController extends Controller
     public function store(CreateRedirectRequest $request)
     {
         $input = $request->only('long_url', 'short_url');
+        $input['email'] = Session::get('auth.user.email');
 
         Rule::create($input);
 
