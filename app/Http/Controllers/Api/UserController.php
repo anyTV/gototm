@@ -16,7 +16,6 @@ class UserController extends Controller
 {
     public function __contruct()
     {
-        $this->middleware('auth');
         $this->middleware('csrf');
     }
 

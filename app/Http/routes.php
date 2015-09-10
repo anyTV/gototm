@@ -13,8 +13,11 @@
 
 Route::get('/', 'RedirectController@index');
 Route::controller('/au', 'Auth\AuthController');
-Route::controller('/my', 'UserController');
-Route::controller('/api/my', 'Api\UserController');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::controller('/my', 'UserController');
+    Route::controller('/api/my', 'Api\UserController');
+});
 
 Route::group([
     'prefix' => '/{code}',
