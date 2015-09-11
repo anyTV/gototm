@@ -85,5 +85,9 @@ var userApp = angular.module('userApp', ['bw.paging'], ['$interpolateProvider', 
             return 0;
         };
 
+        $scope.links = {};
+        $scope.links.data = null;
+        document.getElementById('links-table').style.display = 'block';
+
         get_links();
     }]);

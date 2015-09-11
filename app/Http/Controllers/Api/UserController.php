@@ -41,10 +41,9 @@ class UserController extends Controller
                     ->orWhere('short_url', 'like', '%' . $queryString . '%')
                     ->orWhere('long_url', 'like', $queryString . '%');
             }
-
         }
 
-        $links = $links->paginate(50);
+        $links = $links->paginate(15);
 
         return response()->json($links);
     }

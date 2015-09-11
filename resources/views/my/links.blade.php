@@ -15,7 +15,7 @@
                             <p ng-bind="error"></p>
                         </li>
                     </ul>
-                    <table>
+                    <table id="links-table" style="display:none";>
                         <thead>
                             <th>Long URL</th>
                             <th>Short URL</th>
@@ -24,6 +24,12 @@
                             <th>Created By</th>
                             <th></th>
                         </thead>
+                        <tr ng-if="links.data===null">
+                            <td colspan="6" class="center">Loading...</td>
+                        </tr>
+                        <tr ng-if="links.data.length===0">
+                            <td colspan="6" class="center">No result</td>
+                        </tr>
                         <tr ng-repeat="(key, link) in links.data track by key">
                             <td>
                                 <a ng-hide="link.long_edit_mode" href="#edit&long_id=<% link._id %>" ng-click="edit('long_edit_mode', link)" ng-bind="link.long_url" class="truncate"></a>
