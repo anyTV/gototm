@@ -15,10 +15,19 @@ elixir(function(mix) {
     mix.sass('app.scss');
 
     mix.scripts([
+
+        /*
+         * Put vendor js here
+         */
         'vendor/angular/angular.min.js',
         'vendor/angular-paging/src/paging.js',
         'vendor/moment/min/moment.min.js',
+
+        /*
+         * App scripts
+         */
         '../../resources/assets/js/app.js'
+
     ], null, 'public/js');
 
     mix.version([

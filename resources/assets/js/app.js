@@ -1,10 +1,10 @@
-
-var userApp = angular.module('userApp', ['bw.paging'], function($interpolateProvider, $httpProvider) {
+var userApp = angular.module('userApp', ['bw.paging'], ['$interpolateProvider', '$httpProvider',
+    function ($interpolateProvider, $httpProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
-    }).controller('UserController', function ($http, $scope) {
+    }]).controller('UserController', ['$http', '$scope', function ($http, $scope) {
         var _token = document.getElementById('uid').value,
             page = 1,
 
@@ -86,5 +86,4 @@ var userApp = angular.module('userApp', ['bw.paging'], function($interpolateProv
         };
 
         get_links();
-    });
-
+    }]);
