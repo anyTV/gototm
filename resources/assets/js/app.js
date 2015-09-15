@@ -9,6 +9,8 @@ var userApp = angular.module('userApp', ['bw.paging'], ['$interpolateProvider', 
             page = 1,
 
         get_links = function () {
+            $scope.links.data = null;
+
             $http({
                 url: '/api/my/links',
                 method: 'GET',
