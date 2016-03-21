@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
-use Input;
-use Session;
-use Validator;
-use GuzzleHttp\Client;
-
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -23,7 +18,10 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-
+        $this->middleware(
+            'freedom_oauth',
+            ['only' => ['getCallback']]
+        );
     }
 
     public function getLogin()
@@ -38,40 +36,38 @@ class AuthController extends Controller
 
     public function getIndex()
     {
+        $state = str_random(5);
+        session()->put('auth.state', $state);
+
         $data = [
-                'service' => 'gototm',
                 'redirect_uri' => config('oauth.callback_uri'),
                 'response_type' => 'code',
-                'roles' => 'profile,email,partner',
-                'state' => '/'
+                'roles' => 'profile,email',
+                'client_id' => config('oauth.client_id'),
+                'state' => $state
             ];
 
         $param = http_build_query($data);
-        $url = config('oauth.base_uri') . '/auth?';
+        $url = config('oauth.base_uri') . '/oauth?';
 
         return redirect()->away($url . $param);
     }
 
     public function getCallback()
     {
-        if (!Input::get('access_token')) {
+        $tokens = request()->session()->get('auth.access_token');
 
-            return redirect('/au');
-        }
+        try {
+            $response = request()->client->get(
+                'user', [
+                'headers' => [
+                    'Authorization'=> "Bearer $tokens->access_token"
+                ]]
+            );
+        } catch(ClientException $ex) {
 
-        $access_token = Input::get('access_token');
-        $state = Input::get('state');
-
-        $client = new Client(['base_uri' => config('oauth.base_uri')]);
-
-        $response = $client->get('/user',
-            [ 'headers' => [
-                'access-token' => $access_token
-                ]
-            ]);
-
-        if ($response->getStatusCode() !== 200) {
-            return redirect('/')->withErrors(['Unable to login']);
+            return redirect('/')
+                ->withErrors(['Unable to retrieve user information']);
         }
 
         $user = json_decode($response->getBody(), true);
@@ -80,20 +76,14 @@ class AuthController extends Controller
             return redirect('/au/checkpoint');
         }
 
-        Session::put('auth.access_token', $access_token);
-        Session::put('auth.user', $user);
+        session()->put('auth.user', $user);
 
-        if ($state === NULL || $state === '') {
-            $state = '/';
-        }
-
-        return redirect($state);
+        return redirect('/');
     }
 
     public function getLogout()
     {
-        Session::forget('auth.access_token');
-        Session::forget('auth.user');
+        session()->forget('auth');
 
         return redirect('/');
     }
