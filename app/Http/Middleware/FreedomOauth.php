@@ -42,7 +42,7 @@ class FreedomOauth
                 'oauth/token',
                 ['form_params' => $data]
             );
-        } catch(ClientException $ex) {
+        } catch (ClientException $ex) {
 
             return redirect('/')->withErrors(['Unable to login']);
         }

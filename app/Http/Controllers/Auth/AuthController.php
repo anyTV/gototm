@@ -64,7 +64,7 @@ class AuthController extends Controller
                     'Authorization'=> "Bearer $tokens->access_token"
                 ]]
             );
-        } catch(ClientException $ex) {
+        } catch (ClientException $ex) {
 
             return redirect('/')
                 ->withErrors(['Unable to retrieve user information']);
