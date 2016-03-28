@@ -6,3 +6,4 @@ Homestead.json
 /public/js/vendor
 
 composer.lock
+.reviewboardrc

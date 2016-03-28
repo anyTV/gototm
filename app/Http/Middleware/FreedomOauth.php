@@ -24,7 +24,7 @@ class FreedomOauth
             return redirect('/au');
         }
 
-        if ($inputs['state'] !== $state) {
+        if (+$inputs['state'] !== $state) {
             return redirect('/')->withErrors(['Invalid request']);
         }
 

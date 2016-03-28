@@ -36,7 +36,7 @@ class AuthController extends Controller
 
     public function getIndex()
     {
-        $state = str_random(5);
+        $state = time();
         session()->put('auth.state', $state);
 
         $data = [
