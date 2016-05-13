@@ -11,6 +11,10 @@
 |
 */
 
+Route::any('ping', function () {
+    return json_encode(['message' => 'pong']);
+});
+
 Route::get('/', 'RedirectController@index');
 Route::controller('/au', 'Auth\AuthController');
 
