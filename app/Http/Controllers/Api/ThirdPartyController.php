@@ -36,7 +36,9 @@ class ThirdPartyController extends Controller
             Rule::create($input);
         } catch (Exception $ex) {
             return response()->json([
-                'message' => 'Server failed to create redirect rule'
+                'message' =>
+                    'Server failed to create redirect rule: ' .
+                    $ex->getMessage()
             ], 500);
         };
 
