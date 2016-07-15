@@ -32,5 +32,6 @@ class Kernel extends HttpKernel
         'captcha' => \App\Http\Middleware\ReCaptcha::class,
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         'freedom_oauth' => \App\Http\Middleware\FreedomOauth::class,
+        'third_party_access' => \App\Http\Middleware\ThirdPartyAccess::class,
     ];
 }

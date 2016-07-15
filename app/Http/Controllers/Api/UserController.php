@@ -73,5 +73,4 @@ class UserController extends Controller
 
         return response()->json($rule);
     }
-
 }
