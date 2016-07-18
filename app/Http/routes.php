@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::controller('/api/my', 'Api\UserController');
 });
 
+Route::controller('/api/thirdParty', 'Api\ThirdPartyController');
+
 Route::group([
     'prefix' => '/{code}',
     'where' => ['code' => '(.*)'],
