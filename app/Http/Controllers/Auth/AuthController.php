@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         $user = json_decode($response->getBody(), true);
 
-        if ( $user['email'] != 'george@freedom.tm' ) {
+        if ( !in_array($user['email'], ['allen@freedom.tm', 'george@freedom.tm', 'aldrin.bautista@freedom.tm'] )) {
             return redirect('/')
                 ->withErrors(['You are not allowed to use this service']);
         }

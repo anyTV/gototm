@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>gotoTM: Login</title>
+        <title>playlistTM: Login</title>
         <link href="{{ elixir('css/app.css') }}" rel="stylesheet" type="text/css">
     </head>
     <body>

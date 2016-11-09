@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>gotoTM</title>
+        <title>playlistTM</title>
         <link href="{{ elixir('css/app.css') }}" rel="stylesheet" type="text/css">
     </head>
     <body>
         @include('partials.header')
         <div class="main">
             <div class="container">
-                <span class="title">goto.tm</span>
+                <span class="title">playlist.tm</span>
                 <br>
                 <span><small>Freedom! URL Shortener</small></span>
                 <br><br><br>

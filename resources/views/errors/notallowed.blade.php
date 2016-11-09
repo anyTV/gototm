@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="content">
                     <div class="title">Sorry :(</div>
-                    <h1>For now, goto.TM is only available for Freedom! staffs</h1>
+                    <h1>For now, playlist.TM is only available for George</h1>
                     <a href="/au/logout">Click here to logout</a>
                 </div>
             </div>
