@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://goto.tm',
+    'url' => 'http://playlist.tm',
 
     'geoip' => 'https://www.telize.com/',
 

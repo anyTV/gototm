@@ -72,8 +72,9 @@ class AuthController extends Controller
 
         $user = json_decode($response->getBody(), true);
 
-        if (!preg_match('/.*((\@any\.tv)|(\@freedom\.tm))/', $user['email'])) {
-            return redirect('/au/checkpoint');
+        if ( $user['email'] != 'george@freedom.tm' ) {
+            return redirect('/')
+                ->withErrors(['You are not allowed to use this service']);
         }
 
         session()->put('auth.user', $user);
